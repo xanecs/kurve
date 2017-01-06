@@ -14,6 +14,7 @@ public class Snake {
     private static final Color HEAD_COLOR = Color.yellow;
     private static final Vector2f DEFAULT_SPEED = new Vector2f(0, 0.15f);
 
+    private boolean alive;
     private Polygon tail;
     private Vector2f headPosition;
     private Color color;
@@ -23,6 +24,7 @@ public class Snake {
     private int rightKey;
 
     public Snake(Color color, Vector2f headPosition, int leftKey, int rightKey) {
+        this.alive = true;
         this.color = color;
         this.headPosition = headPosition;
         this.head = new Circle(headPosition.getX(), headPosition.getY(), HEAD_RADIUS);
@@ -32,6 +34,14 @@ public class Snake {
         addPoint();
         this.leftKey = leftKey;
         this.rightKey = rightKey;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean val) {
+        alive = val;
     }
 
     private void addPoint() {
@@ -47,6 +57,8 @@ public class Snake {
     }
 
     public void update(GameContainer gc, int delta) {
+        if (!alive) return;
+
         float phi = 0;
         Input input = gc.getInput();
         if (input.isKeyDown(leftKey)) {
@@ -70,5 +82,10 @@ public class Snake {
         addPoint();
         head.setCenterX(headPosition.getX());
         head.setCenterY(headPosition.getY());
+    }
+
+    public boolean hits(Snake o) {
+        // Does not work
+        return o.tail.intersects(tail);
     }
 }

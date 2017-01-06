@@ -7,13 +7,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Game extends BasicGame {
-    private Snake redSnake;
-    private Snake blueSnake;
+    private Field field;
 
     public Game(String title) {
         super(title);
-        redSnake = new Snake(Color.red, new Vector2f(100f, 100f), Input.KEY_LEFT, Input.KEY_RIGHT);
-        blueSnake = new Snake(Color.blue, new Vector2f(100f, 200f), Input.KEY_A, Input.KEY_D);
+        field = new Field();
+        field.addSnake(Input.KEY_LEFT, Input.KEY_RIGHT);
+        field.addSnake(Input.KEY_A, Input.KEY_D);
+        field.addSnake(Input.KEY_J, Input.KEY_L);
     }
 
     @Override
@@ -23,14 +24,12 @@ public class Game extends BasicGame {
 
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
-        redSnake.update(gameContainer, i);
-        blueSnake.update(gameContainer, i);
+        field.update(gameContainer, i);
     }
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
-        redSnake.draw(graphics);
-        blueSnake.draw(graphics);
+        field.draw(graphics);
     }
 
     public static void main(String[] args) {
